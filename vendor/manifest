@@ -90,6 +90,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/go-siris/tcplisten",
+			"repository": "https://github.com/go-siris/tcplisten",
+			"vcs": "git",
+			"revision": "cbd0479425c147dfb78ad3eef004583d128f1827",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/go-stack/stack",
 			"repository": "https://github.com/go-stack/stack",
 			"vcs": "git",
