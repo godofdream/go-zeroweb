@@ -14,13 +14,13 @@ func (a *Zeroweb) ReloadDB() {
 	config.Port = uint16(a.Config.GetInt64("db.port"))
 	config.MaxConnections = a.Config.GetInt("db.maxconnections")
 
-	if a.DBConfig != nil &&
-		config.Host == a.DBConfig.Host &&
-		config.User == a.DBConfig.User &&
-		config.Password == a.DBConfig.Password &&
-		config.Database == a.DBConfig.Database &&
-		config.Port == a.DBConfig.Port &&
-		config.MaxConnections == a.DBConfig.MaxConnections {
+	if a.dbConfig != nil &&
+		config.Host == a.dbConfig.Host &&
+		config.User == a.dbConfig.User &&
+		config.Password == a.dbConfig.Password &&
+		config.Database == a.dbConfig.Database &&
+		config.Port == a.dbConfig.Port &&
+		config.MaxConnections == a.dbConfig.MaxConnections {
 		return // config didn't change for DB
 	}
 
@@ -42,6 +42,6 @@ func (a *Zeroweb) ReloadDB() {
 		log.Error().Err(err).Interface("config", config).Msg("connection to DB failed (keeping old db connection)")
 		return
 	}
-	a.DBConfig = &config
+	a.dbConfig = &config
 	a.DB = connPool
 }
