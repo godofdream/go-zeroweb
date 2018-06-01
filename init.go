@@ -23,7 +23,7 @@ func (a *Zeroweb) Init() {
 	a.Config.SetDefault("http.max_connections_per_ip", 20)
 	a.Config.SetDefault("http.max_connections_per_connection", 20)
 	a.Config.SetDefault("http.max_keepalive_duration", time.Minute*5)
-	a.Config.SetDefault("http.max_request_body_size", 500)
+	a.Config.SetDefault("http.max_request_body_size", 4*1024*1024)
 	a.Config.SetDefault("http.reduce_memory_consumption", false)
 	a.Config.SetDefault("http.max_concurrent_connections", 1024*1024)
 
