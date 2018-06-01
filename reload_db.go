@@ -5,7 +5,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (a *Zeroweb) reloadDB() {
+func (a *Zeroweb) reloadDB() error {
 	var config pgx.ConnPoolConfig
 	config.Host = a.Config.GetString("db.host")
 	config.User = a.Config.GetString("db.user")
@@ -21,7 +21,7 @@ func (a *Zeroweb) reloadDB() {
 		config.Database == a.dbConfig.Database &&
 		config.Port == a.dbConfig.Port &&
 		config.MaxConnections == a.dbConfig.MaxConnections {
-		return // config didn't change for DB
+		return nil // config didn't change for DB
 	}
 
 	//TODO
@@ -40,8 +40,9 @@ func (a *Zeroweb) reloadDB() {
 			log.Fatal().Err(err).Interface("config", config).Msg("connection to DB failed")
 		}
 		log.Error().Err(err).Interface("config", config).Msg("connection to DB failed (keeping old db connection)")
-		return
+		return err
 	}
 	a.dbConfig = &config
 	a.DB = connPool
+	return nil
 }

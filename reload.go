@@ -1,8 +1,15 @@
 package zeroweb
 
-func (a *Zeroweb) Reload() {
+func (a *Zeroweb) Reload() error {
 	//TODO reload on config change
-	a.reloadLogger()
-	a.reloadDB()
-	a.reloadHTTP()
+	if err := a.reloadLogger(); err != nil {
+		return err
+	}
+	if err := a.reloadDB(); err != nil {
+		return err
+	}
+	if err := a.reloadHTTP(); err != nil {
+		return err
+	}
+	return nil
 }
