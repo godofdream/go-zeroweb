@@ -13,7 +13,7 @@ WebFramework Stack written in golang optimized for lowest latency and high throu
 | Component     | Description   | License  |
 | ------------- |:-------------:| -----:|
 | Config        | [Viper](https://godoc.org/github.com/spf13/viper) can take configs from various formats and sources and supports reload triggers | |
-| DB (Postgres) | [PGX] (https://godoc.org/github.com/jackc/pgx) is a database driver for Postgres/Cockroachdb including a Connectionpool and prepared statements  |    |
+| DB (Postgres) | [PGX](https://godoc.org/github.com/jackc/pgx) is a database driver for Postgres/Cockroachdb including a Connectionpool and prepared statements  |    |
 | Log           | [zerolog](https://godoc.org/github.com/rs/zerolog) is a static typed json logger with nearly no allocations |     |
 | Router        | [fasthttprouter](https://godoc.org/github.com/godofdream/fasthttprouter)      |     |
 | Server        | [fasthttp](https://godoc.org/github.com/godofdream/fasthttp) is a http library      |     |
