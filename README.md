@@ -13,7 +13,7 @@ WebFramework Stack written in golang optimized for lowest latency and high throu
 | Component     | Description   | License  |
 | ------------- |:-------------:| -----:|
 | Config        | [Viper](https://godoc.org/github.com/spf13/viper) can take configs from various formats and sources and supports reload triggers | |
-| DB (Postgres) | [PGX] (https://godoc.org/github.com/jackc/pgx) is a database driver for Postgres/Cockroachdb including a Connectionpool and prepared statements  |    |
+| DB (Postgres) | [PGX](https://godoc.org/github.com/jackc/pgx) is a database driver for Postgres/Cockroachdb including a Connectionpool and prepared statements  |    |
 | Log           | [zerolog](https://godoc.org/github.com/rs/zerolog) is a static typed json logger with nearly no allocations |     |
 | Router        | [fasthttprouter](https://godoc.org/github.com/godofdream/fasthttprouter)      |     |
 | Server        | [fasthttp](https://godoc.org/github.com/godofdream/fasthttp) is a http library      |     |
@@ -25,6 +25,6 @@ WebFramework Stack written in golang optimized for lowest latency and high throu
 | Config        | To provide a simple way for handling configurations and reloads on configchange Viper is directly included. Viper is not optimized for speed but for comfortability  |
 | DB            | Postgres is mature, Cockroachdb is extremly scaleable but both speak the postgres protocol, this provides an common sql syntax with the possibility to scale  |
 | Log           | Fastest Logger by [benchmark](https://github.com/rs/zerolog#benchmarks) |
-| Router        | The Router is a Trie Based router with a Ο(|s|) Complexity with s being the length of the string |
+| Router        | The Router is a Trie Based router with a Ο(\|s\|) Complexity with s being the length of the string |
 | Server        | Fasthttp is the fastest http-server for golang [benchmark](https://www.techempower.com/benchmarks/) and uses an optimized flate and gzip implementation [compress](https://github.com/klauspost/compress)|
 | View          | jinja2 familiar Syntax And fastest templating without precompilation to golang [benchmark](https://github.com/SlinSo/goTemplateBenchmark#full-featured-template-engines-1) |
