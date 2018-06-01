@@ -5,7 +5,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (a *Zeroweb) Serve() {
+func (a *Zeroweb) Serve() error {
 	tcpconf := tcplisten.Config{
 		ReusePort:   true,
 		DeferAccept: true,
@@ -13,13 +13,16 @@ func (a *Zeroweb) Serve() {
 		Backlog:     a.Config.GetInt("http.max_pending_connections"),
 	}
 	ln, err := tcpconf.NewListener("tcp", a.Config.GetString("http.addr"))
-
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed starting Listener")
+		return err
 	}
+
 	log.Info().Msg("Starting Webserver")
 	if err = a.Server.Serve(ln); err != nil {
 		log.Fatal().Err(err).Msg("Failed serving incoming connections")
+		return err
 	}
 
+	return nil
 }
