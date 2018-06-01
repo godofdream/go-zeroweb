@@ -5,7 +5,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (a *Zeroweb) ReloadDB() {
+func (a *Zeroweb) reloadDB() {
 	var config pgx.ConnPoolConfig
 	config.Host = a.Config.GetString("db.host")
 	config.User = a.Config.GetString("db.user")

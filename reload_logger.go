@@ -5,7 +5,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (a *Zeroweb) ReloadLogger() {
+func (a *Zeroweb) reloadLogger() {
 	// UNIX Time is faster and smaller than most timestamps
 	// If you set zerolog.TimeFieldFormat to an empty string,
 	// logs will write with UNIX time
