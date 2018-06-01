@@ -25,6 +25,6 @@ WebFramework Stack written in golang optimized for lowest latency and high throu
 | Config        | To provide a simple way for handling configurations and reloads on configchange Viper is directly included. Viper is not optimized for speed but for comfortability  |
 | DB            | Postgres is mature, Cockroachdb is extremly scaleable but both speak the postgres protocol, this provides an common sql syntax with the possibility to scale  |
 | Log           | Fastest Logger by [benchmark](https://github.com/rs/zerolog#benchmarks) |
-| Router        | The Router is a Trie Based router with a Ο(|s|) Complexity with s being the length of the string |
+| Router        | The Router is a Trie Based router with a Ο(\|s\|) Complexity with s being the length of the string |
 | Server        | Fasthttp is the fastest http-server for golang [benchmark](https://www.techempower.com/benchmarks/) and uses an optimized flate and gzip implementation [compress](https://github.com/klauspost/compress)|
 | View          | jinja2 familiar Syntax And fastest templating without precompilation to golang [benchmark](https://github.com/SlinSo/goTemplateBenchmark#full-featured-template-engines-1) |
