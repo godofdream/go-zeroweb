@@ -6,6 +6,7 @@ import (
 )
 
 func (a *Zeroweb) Serve() error {
+	a.Reload()
 	tcpconf := tcplisten.Config{
 		ReusePort:   true,
 		DeferAccept: true,
