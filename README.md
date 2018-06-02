@@ -12,12 +12,12 @@ WebFramework Stack written in golang optimized for lowest latency and high throu
 # Components
 | Component     | Description   | License  |
 | ------------- |:-------------:| -----:|
-| Config        | [Viper](https://godoc.org/github.com/spf13/viper) can take configs from various formats and sources and supports reload triggers | |
-| DB (Postgres) | [PGX](https://godoc.org/github.com/jackc/pgx) is a database driver for Postgres/Cockroachdb including a Connectionpool and prepared statements  |    |
-| Log           | [zerolog](https://godoc.org/github.com/rs/zerolog) is a static typed json logger with nearly no allocations |     |
-| Router        | [fasthttprouter](https://godoc.org/github.com/godofdream/fasthttprouter)      |     |
-| Server        | [fasthttp](https://godoc.org/github.com/godofdream/fasthttp) is a http library      |     |
-| View          | [jet](https://godoc.org/github.com/godofdream/jet) is a zero allocation tempalte engine with jinja2 familiar syntax |     |
+| Config        | [Viper](https://godoc.org/github.com/spf13/viper) can take configs from various formats and sources and supports reload triggers | [MIT License](https://github.com/spf13/viper/blob/master/LICENSE) |
+| DB (Postgres) | [PGX](https://godoc.org/github.com/jackc/pgx) is a database driver for Postgres/Cockroachdb including a Connectionpool and prepared statements  | [MIT License](https://github.com/jackc/pgx/blob/master/LICENSE)   |
+| Log           | [zerolog](https://godoc.org/github.com/rs/zerolog) is a static typed json logger with nearly no allocations | [MIT License](https://github.com/rs/zerolog/blob/master/LICENSE)    |
+| Router        | [fasthttprouter](https://godoc.org/github.com/godofdream/fasthttprouter)      | [BSD 3-Clause "Revised" License](https://github.com/godofdream/fasthttprouter/blob/master/LICENSE)    |
+| Server        | [fasthttp](https://godoc.org/github.com/godofdream/fasthttp) is a http library      | [MIT License](https://github.com/godofdream/fasthttp/blob/master/LICENSE)  |
+| View          | [jet](https://godoc.org/github.com/godofdream/jet) is a zero allocation tempalte engine with jinja2 familiar syntax | [Apache License 2.0](https://github.com/godofdream/jet/blob/master/LICENSE)   |
 
 # Why these component?
 | Component     | Description   |
