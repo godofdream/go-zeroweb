@@ -29,3 +29,6 @@ WebFramework Stack written in golang optimized for lowest latency and high throu
 | Router        | The Router is a Trie Based router with a Ο(\|s\|) Complexity with s being the length of the string |
 | Server        | Fasthttp is the fastest http-server for golang [benchmark](https://www.techempower.com/benchmarks/) and uses an optimized flate and gzip implementation [compress](https://github.com/klauspost/compress)|
 | View          | jinja2 familiar Syntax And fastest templating without precompilation to golang [benchmark](https://github.com/SlinSo/goTemplateBenchmark#full-featured-template-engines-1) |
+
+# License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fgodofdream%2Fgo-zeroweb.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fgodofdream%2Fgo-zeroweb?ref=badge_large)
