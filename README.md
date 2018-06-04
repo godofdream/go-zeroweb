@@ -5,6 +5,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/0df317e347fb9cc9747c/maintainability)](https://codeclimate.com/github/godofdream/go-zeroweb/maintainability)
 [![Coverage](http://gocover.io/_badge/github.com/godofdream/go-zeroweb)](http://gocover.io/github.com/godofdream/go-zeroweb)
 [![Build Status](https://travis-ci.org/godofdream/go-zeroweb.svg)](https://travis-ci.org/godofdream/go-zeroweb)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fgodofdream%2Fgo-zeroweb.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fgodofdream%2Fgo-zeroweb?ref=badge_shield)
 
 
 WebFramework Stack written in golang optimized for lowest latency and high throughput
