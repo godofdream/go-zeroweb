@@ -6,6 +6,10 @@ import (
 )
 
 func (a *Zeroweb) reloadDB() error {
+	if !a.Config.GetBool("db.enabled") {
+		return nil
+	}
+
 	var config pgx.ConnPoolConfig
 	config.Host = a.Config.GetString("db.host")
 	config.User = a.Config.GetString("db.user")
