@@ -30,6 +30,7 @@ func New(config *viper.Viper) *Zeroweb {
 	config.SetDefault("log.log_level", zerolog.InfoLevel.String())
 	config.SetDefault("db.enabled", true)
 	config.SetDefault("db.maxconnections", runtime.NumCPU()*4)
+	config.SetDefault("http.network", "tcp")
 	config.SetDefault("http.addr", "localhost:80")
 	config.SetDefault("http.MaxPendingConnections", runtime.NumCPU()*2000)
 	config.SetDefault("http.read_timeout", time.Minute*1)
