@@ -6,7 +6,7 @@ import (
 )
 
 func (a *Zeroweb) reloadHTTP() error {
-	a.View = jet.NewHTMLSet("./templates")
+	a.View = jet.NewHTMLSet(a.Config.GetString("templates.folder"))
 
 	a.Server = &fasthttp.Server{
 		Handler:              a.Router.Handler,

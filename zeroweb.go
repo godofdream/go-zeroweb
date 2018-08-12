@@ -40,6 +40,7 @@ func New(config *viper.Viper) *Zeroweb {
 	config.SetDefault("http.max_request_body_size", 4*1024*1024)
 	config.SetDefault("http.reduce_memory_consumption", false)
 	config.SetDefault("http.max_concurrent_connections", 1024*1024)
+	config.SetDefault("templates.folder", "./templates")
 
 	result := &Zeroweb{
 		Config: config,
