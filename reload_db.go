@@ -1,7 +1,7 @@
 package zeroweb
 
 import (
-	"github.com/jackc/pgx"
+	"github.com/go-pg/pg"
 	"github.com/rs/zerolog/log"
 )
 
@@ -10,43 +10,47 @@ func (a *Zeroweb) reloadDB() error {
 		return nil
 	}
 
-	var config pgx.ConnPoolConfig
-	config.Host = a.Config.GetString("db.host")
-	config.User = a.Config.GetString("db.user")
-	config.Password = a.Config.GetString("db.password")
-	config.Database = a.Config.GetString("db.database")
-	config.Port = uint16(a.Config.GetInt64("db.port"))
-	config.MaxConnections = a.Config.GetInt("db.maxconnections")
+	var config pg.Options
+	var oldconfig *pg.Options = nil
+	if a.DB != nil {
+		oldconfig = a.DB.Options()
+	}
 
-	if a.dbConfig != nil &&
-		config.Host == a.dbConfig.Host &&
-		config.User == a.dbConfig.User &&
-		config.Password == a.dbConfig.Password &&
-		config.Database == a.dbConfig.Database &&
-		config.Port == a.dbConfig.Port &&
-		config.MaxConnections == a.dbConfig.MaxConnections {
+	err := a.Config.Unmarshal(&config)
+	if err != nil {
+		a.Log.Fatal().Err(err).Msg("unable to decode into struct")
+	}
+
+	if oldconfig != nil &&
+		config.Addr == oldconfig.Addr &&
+		config.User == oldconfig.User &&
+		config.Password == oldconfig.Password &&
+		config.Database == oldconfig.Database &&
+		config.MaxRetries == oldconfig.MaxRetries &&
+		config.RetryStatementTimeout == oldconfig.RetryStatementTimeout &&
+		config.MinRetryBackoff == oldconfig.MinRetryBackoff &&
+		config.MaxRetryBackoff == oldconfig.MaxRetryBackoff &&
+		config.DialTimeout == oldconfig.DialTimeout &&
+		config.ReadTimeout == oldconfig.ReadTimeout &&
+		config.WriteTimeout == oldconfig.WriteTimeout &&
+		config.PoolSize == oldconfig.PoolSize &&
+		config.PoolTimeout == oldconfig.PoolTimeout &&
+		config.IdleTimeout == oldconfig.IdleTimeout &&
+		config.MaxAge == oldconfig.MaxAge &&
+		config.IdleCheckFrequency == oldconfig.IdleCheckFrequency {
 		return nil // config didn't change for DB
 	}
 
-	//TODO
-	// config.AfterConnect = func(conn *pgx.Conn) error {
-	// 	worldSelectStmt = mustPrepare(conn, "worldSelectStmt", "SELECT id, randomNumber FROM World WHERE id = $1")
-	// 	worldUpdateStmt = mustPrepare(conn, "worldUpdateStmt", "UPDATE World SET randomNumber = $1 WHERE id = $2")
-	// 	fortuneSelectStmt = mustPrepare(conn, "fortuneSelectStmt", "SELECT id, message FROM Fortune")
-	// 	return nil
-	// }
-	//TODO
-	// config.DialFunc
-
-	connPool, err := pgx.NewConnPool(config)
-	if err != nil {
+	//config.DialFunc //TODO cache dns, reuseport
+	db := pg.Connect(&config)
+	if db == nil {
 		if a.DB == nil {
 			log.Fatal().Err(err).Interface("config", config).Msg("connection to DB failed")
 		}
 		log.Error().Err(err).Interface("config", config).Msg("connection to DB failed (keeping old db connection)")
 		return err
 	}
-	a.dbConfig = &config
-	a.DB = connPool
+
+	a.DB = db
 	return nil
 }

@@ -4,23 +4,22 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/go-pg/pg"
 	"github.com/godofdream/fasthttp"
 	"github.com/godofdream/fasthttprouter"
 	"github.com/godofdream/jet"
-	"github.com/jackc/pgx"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 )
 
 type Zeroweb struct {
-	Config   *viper.Viper
-	DB       *pgx.ConnPool
-	dbConfig *pgx.ConnPoolConfig
-	Log      *zerolog.Logger
-	Router   *fasthttprouter.Router
-	Server   *fasthttp.Server
-	View     *jet.Set
+	Config *viper.Viper
+	DB     *pg.DB
+	Log    *zerolog.Logger
+	Router *fasthttprouter.Router
+	Server *fasthttp.Server
+	View   *jet.Set
 }
 
 // New takes a viper config and returns a half initialized Zeroweb.
@@ -43,12 +42,11 @@ func New(config *viper.Viper) *Zeroweb {
 	config.SetDefault("http.max_concurrent_connections", 1024*1024)
 
 	result := &Zeroweb{
-		Config:   config,
-		DB:       nil,
-		dbConfig: nil,
-		Log:      &log.Logger,
-		Router:   fasthttprouter.New(),
-		Server:   nil,
+		Config: config,
+		DB:     nil,
+		Log:    &log.Logger,
+		Router: fasthttprouter.New(),
+		Server: nil,
 	}
 	result.reloadLogger()
 	result.reloadDB()
