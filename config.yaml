@@ -224,3 +224,20 @@ log:
 
   # MessageFieldName is the field name used for the message field.
   MessageFieldName: "message"
+
+templates:
+  Folder: ./templates
+
+static:
+  # Folder for static files
+  # Files will be reachable by the path /static/*filename
+  StaticFolder: ./static
+
+  # Files will be reachable by the path /css/*filename
+  CSSFolder: ./static/css
+
+  # Files will be reachable by the path /fonts/*filename
+  FontsFolder: ./static/fonts
+
+  # Files will be reachable by the path /js/*filename
+  JSFolder: ./static/js

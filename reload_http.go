@@ -7,13 +7,14 @@ import (
 )
 
 func (zeroweb *Zeroweb) reloadHTTP() error {
-	zeroweb.View = jet.NewHTMLSet(zeroweb.Config.GetString("templates.folder"))
+	// Jet templating
+	zeroweb.View = jet.NewHTMLSet(zeroweb.Config.GetString("templates.Folder"))
 
 	// Routes
-	zeroweb.Router.ServeFiles("/static/*filepath", zeroweb.Config.GetString("static.static_folder"))
-	zeroweb.Router.ServeFiles("/css/*filepath", zeroweb.Config.GetString("static.css_folder"))
-	zeroweb.Router.ServeFiles("/js/*filepath", zeroweb.Config.GetString("static.js_folder"))
-	zeroweb.Router.ServeFiles("/fonts/*filepath", zeroweb.Config.GetString("static.fonts_folder"))
+	zeroweb.Router.ServeFiles("/static/*filepath", zeroweb.Config.GetString("static.StaticFolder"))
+	zeroweb.Router.ServeFiles("/css/*filepath", zeroweb.Config.GetString("static.CSSFolder"))
+	zeroweb.Router.ServeFiles("/js/*filepath", zeroweb.Config.GetString("static.JSFolder"))
+	zeroweb.Router.ServeFiles("/fonts/*filepath", zeroweb.Config.GetString("static.FontsFolder"))
 
 	// httpserver
 

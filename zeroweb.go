@@ -64,13 +64,13 @@ func New(config *viper.Viper) *Zeroweb {
 
 	config.SetDefault("http.Addr", "localhost:8080")
 
-	config.SetDefault("templates.folder", "./templates")
+	config.SetDefault("templates.Folder", "./templates")
 
 	// config.SetDefault("templates.folder", "./templates")
-	config.SetDefault("static.static_folder", "./static")
-	config.SetDefault("static.css_folder", "./static/css")
-	config.SetDefault("static.js_folder", "./static/js")
-	config.SetDefault("static.fonts_folder", "./static/fonts")
+	config.SetDefault("static.StaticFolder", "./static")
+	config.SetDefault("static.CSSFolder", "./static/css")
+	config.SetDefault("static.JSFolder", "./static/js")
+	config.SetDefault("static.FontsFolder", "./static/fonts")
 	// config.SetDefault("cache.assetcache_folder", "./cache/assets")
 	// config.SetDefault("cache.optimize_assets", false)
 	result := &Zeroweb{
