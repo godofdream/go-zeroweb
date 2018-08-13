@@ -3,23 +3,35 @@ package zeroweb
 import (
 	"github.com/godofdream/fasthttp"
 	"github.com/godofdream/jet"
+	"github.com/google/go-cmp/cmp"
 )
 
-func (a *Zeroweb) reloadHTTP() error {
-	a.View = jet.NewHTMLSet(a.Config.GetString("templates.folder"))
+func (zeroweb *Zeroweb) reloadHTTP() error {
+	zeroweb.View = jet.NewHTMLSet(zeroweb.Config.GetString("templates.folder"))
 
-	a.Server = &fasthttp.Server{
-		Handler:              a.Router.Handler,
-		Concurrency:          a.Config.GetInt("http.max_concurrent_connections"),
-		Name:                 "", // dropping servername in http as it uses unnecessary bytes and tells attackers about the system
-		ReadTimeout:          a.Config.GetDuration("http.read_timeout"),
-		WriteTimeout:         a.Config.GetDuration("http.write_timeout"),
-		MaxConnsPerIP:        a.Config.GetInt("http.max_connections_per_ip"),
-		MaxRequestsPerConn:   a.Config.GetInt("http.max_connections_per_connection"),
-		MaxKeepaliveDuration: a.Config.GetDuration("http.max_keepalive_duration"),
-		MaxRequestBodySize:   a.Config.GetInt("http.max_request_body_size"),
-		ReduceMemoryUsage:    a.Config.GetBool("http.reduce_memory_consumption"),
-		Logger:               a.Log,
+	// Routes
+	zeroweb.Router.ServeFiles("/static/*filepath", zeroweb.Config.GetString("static.static_folder"))
+	zeroweb.Router.ServeFiles("/css/*filepath", zeroweb.Config.GetString("static.css_folder"))
+	zeroweb.Router.ServeFiles("/js/*filepath", zeroweb.Config.GetString("static.js_folder"))
+	zeroweb.Router.ServeFiles("/fonts/*filepath", zeroweb.Config.GetString("static.fonts_folder"))
+
+	// httpserver
+
+	var httpconfig *fasthttp.Server
+	var oldhttpconfig *fasthttp.Server = zeroweb.Server
+	err := zeroweb.Config.UnmarshalKey("http", httpconfig)
+	if err != nil {
+		zeroweb.Log.Error().Err(err).Msg("unable to decode http config into struct")
+		return err
+	}
+
+	if oldhttpconfig != nil && cmp.Equal(httpconfig, oldhttpconfig) {
+		return nil // config didn't change for Webserver
+	}
+
+	zeroweb.Server = &fasthttp.Server{
+		Handler: zeroweb.Router.Handler,
+		Logger:  zeroweb.Log,
 	}
 
 	return nil

@@ -26,22 +26,53 @@ type Zeroweb struct {
 // After adding some Routes start with it with Serve()
 func New(config *viper.Viper) *Zeroweb {
 	// defaults
-	config.SetDefault("log.log_level", zerolog.InfoLevel.String())
-	config.SetDefault("db.enabled", true)
-	config.SetDefault("db.maxconnections", runtime.NumCPU()*4)
-	config.SetDefault("http.network", "tcp")
-	config.SetDefault("http.addr", "localhost:80")
-	config.SetDefault("http.MaxPendingConnections", runtime.NumCPU()*2000)
-	config.SetDefault("http.read_timeout", time.Minute*1)
-	config.SetDefault("http.write_timeout", time.Minute*1)
-	config.SetDefault("http.max_connections_per_ip", 20)
-	config.SetDefault("http.max_connections_per_connection", 20)
-	config.SetDefault("http.max_keepalive_duration", time.Minute*5)
-	config.SetDefault("http.max_request_body_size", 4*1024*1024)
-	config.SetDefault("http.reduce_memory_consumption", false)
-	config.SetDefault("http.max_concurrent_connections", 1024*1024)
+	config.SetDefault("log.LogLevel", zerolog.InfoLevel.String())
+	config.SetDefault("log.LevelFieldName", "level")
+	config.SetDefault("log.MessageFieldName", "message")
+	config.SetDefault("log.TimestampFieldName", "time")
+
+	config.SetDefault("db.Enabled", true)
+
+	config.SetDefault("db.Network", "tcp")
+	config.SetDefault("db.Addr", "127.0.0.1:5432")
+	config.SetDefault("db.MaxRetries", 0)
+	config.SetDefault("db.RetryStatementTimeout", false)
+	config.SetDefault("db.MinRetryBackoff", 250*time.Millisecond)
+	config.SetDefault("db.MaxRetryBackoff", 4*time.Second)
+	config.SetDefault("db.DialTimeout", 5*time.Second)
+	config.SetDefault("db.ReadTimeout", 0)
+	config.SetDefault("db.WriteTimeout", 0)
+	config.SetDefault("db.PoolSize", 10*runtime.NumCPU())
+	config.SetDefault("IdleCheckFrequency", 1*time.Minute)
+
+	config.SetDefault("http.Name", "") // dropping servername in http as it uses unnecessary bytes and tells attackers about the system
+	config.SetDefault("http.Concurrency", 1048576)
+	config.SetDefault("http.DisableKeepalive", true)
+	config.SetDefault("http.ReadBufferSize", 8192)
+	config.SetDefault("http.WriteBufferSize", 8192)
+	config.SetDefault("http.ReadTimeout", 0)
+	config.SetDefault("http.WriteTimeout", 0)
+	config.SetDefault("http.MaxConnsPerIP", 0)
+	config.SetDefault("http.MaxRequestsPerConn", 0)
+	config.SetDefault("http.MaxKeepaliveDuration", 0)
+	config.SetDefault("http.MaxRequestBodySize", 4194304)
+	config.SetDefault("http.ReduceMemoryUsage", false)
+	config.SetDefault("http.GetOnly", false)
+	config.SetDefault("http.LogAllErrors", false)
+	config.SetDefault("http.DisableHeaderNamesNormalizing", false)
+	config.SetDefault("http.NoDefaultServerHeader", true)
+
+	config.SetDefault("http.Addr", "localhost:8080")
+
 	config.SetDefault("templates.folder", "./templates")
 
+	// config.SetDefault("templates.folder", "./templates")
+	config.SetDefault("static.static_folder", "./static")
+	config.SetDefault("static.css_folder", "./static/css")
+	config.SetDefault("static.js_folder", "./static/js")
+	config.SetDefault("static.fonts_folder", "./static/fonts")
+	// config.SetDefault("cache.assetcache_folder", "./cache/assets")
+	// config.SetDefault("cache.optimize_assets", false)
 	result := &Zeroweb{
 		Config: config,
 		DB:     nil,
@@ -51,5 +82,6 @@ func New(config *viper.Viper) *Zeroweb {
 	}
 	result.reloadLogger()
 	result.reloadDB()
+	result.reloadHTTP()
 	return result
 }

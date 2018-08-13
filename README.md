@@ -14,7 +14,7 @@ WebFramework Stack written in golang optimized for lowest latency and high throu
 | Component     | Description   | License  |
 | ------------- |:-------------:| -----:|
 | Config        | [Viper](https://godoc.org/github.com/spf13/viper) can take configs from various formats and sources and supports reload triggers | [MIT License](https://github.com/spf13/viper/blob/master/LICENSE) |
-| DB (Postgres) | [PGX](https://godoc.org/github.com/jackc/pgx) is a database driver for Postgres/Cockroachdb including a Connectionpool and prepared statements  | [MIT License](https://github.com/jackc/pgx/blob/master/LICENSE)   |
+| DB (Postgres) | [Go-PG](https://github.com/go-pg/pg) is a database driver for Postgres/Cockroachdb including a Connectionpool and prepared statements  | [BSD 2-Clause License](https://github.com/go-pg/pg/blob/master/LICENSE)   |
 | Log           | [zerolog](https://godoc.org/github.com/rs/zerolog) is a static typed json logger with nearly no allocations | [MIT License](https://github.com/rs/zerolog/blob/master/LICENSE)    |
 | Router        | [fasthttprouter](https://godoc.org/github.com/godofdream/fasthttprouter)      | [BSD 3-Clause "Revised" License](https://github.com/godofdream/fasthttprouter/blob/master/LICENSE)    |
 | Server        | [fasthttp](https://godoc.org/github.com/godofdream/fasthttp) is a http library      | [MIT License](https://github.com/godofdream/fasthttp/blob/master/LICENSE)  |
@@ -24,7 +24,7 @@ WebFramework Stack written in golang optimized for lowest latency and high throu
 | Component     | Description   |
 | ------------- |:-------------:|
 | Config        | To provide a simple way for handling configurations and reloads on configchange Viper is directly included. Viper is not optimized for speed but for comfortability  |
-| DB            | Postgres is mature, Cockroachdb is extremly scaleable but both speak the postgres protocol, this provides an common sql syntax with the possibility to scale  |
+| DB            | Postgres is mature, Cockroachdb is extremly scaleable but both speak the postgres protocol, this provides an common sql syntax with the possibility to scale. GO-PG ships with an easy to use ORM capable of prepared statements and batches  |
 | Log           | Fastest Logger by [benchmark](https://github.com/rs/zerolog#benchmarks) |
 | Router        | The Router is a Trie Based router with a Ο(\|s\|) Complexity with s being the length of the string |
 | Server        | Fasthttp is the fastest http-server for golang [benchmark](https://www.techempower.com/benchmarks/) and uses an optimized flate and gzip implementation [compress](https://github.com/klauspost/compress)|

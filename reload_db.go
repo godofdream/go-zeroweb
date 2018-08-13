@@ -2,55 +2,41 @@ package zeroweb
 
 import (
 	"github.com/go-pg/pg"
+	"github.com/google/go-cmp/cmp"
 	"github.com/rs/zerolog/log"
 )
 
-func (a *Zeroweb) reloadDB() error {
-	if !a.Config.GetBool("db.enabled") {
+func (zeroweb *Zeroweb) reloadDB() error {
+	if !zeroweb.Config.GetBool("db.Enabled") {
 		return nil
 	}
 
 	var config pg.Options
 	var oldconfig *pg.Options = nil
-	if a.DB != nil {
-		oldconfig = a.DB.Options()
+	if zeroweb.DB != nil {
+		oldconfig = zeroweb.DB.Options()
 	}
 
-	err := a.Config.Unmarshal(&config)
+	err := zeroweb.Config.UnmarshalKey("db", &config)
 	if err != nil {
-		a.Log.Fatal().Err(err).Msg("unable to decode into struct")
+		zeroweb.Log.Error().Err(err).Msg("unable to decode db config into struct")
+		return err
 	}
 
-	if oldconfig != nil &&
-		config.Addr == oldconfig.Addr &&
-		config.User == oldconfig.User &&
-		config.Password == oldconfig.Password &&
-		config.Database == oldconfig.Database &&
-		config.MaxRetries == oldconfig.MaxRetries &&
-		config.RetryStatementTimeout == oldconfig.RetryStatementTimeout &&
-		config.MinRetryBackoff == oldconfig.MinRetryBackoff &&
-		config.MaxRetryBackoff == oldconfig.MaxRetryBackoff &&
-		config.DialTimeout == oldconfig.DialTimeout &&
-		config.ReadTimeout == oldconfig.ReadTimeout &&
-		config.WriteTimeout == oldconfig.WriteTimeout &&
-		config.PoolSize == oldconfig.PoolSize &&
-		config.PoolTimeout == oldconfig.PoolTimeout &&
-		config.IdleTimeout == oldconfig.IdleTimeout &&
-		config.MaxAge == oldconfig.MaxAge &&
-		config.IdleCheckFrequency == oldconfig.IdleCheckFrequency {
+	if oldconfig != nil && cmp.Equal(config, oldconfig) {
 		return nil // config didn't change for DB
 	}
 
 	//config.DialFunc //TODO cache dns, reuseport
 	db := pg.Connect(&config)
 	if db == nil {
-		if a.DB == nil {
+		if zeroweb.DB == nil {
 			log.Fatal().Err(err).Interface("config", config).Msg("connection to DB failed")
 		}
 		log.Error().Err(err).Interface("config", config).Msg("connection to DB failed (keeping old db connection)")
 		return err
 	}
 
-	a.DB = db
+	zeroweb.DB = db
 	return nil
 }

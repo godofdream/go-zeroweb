@@ -1,0 +1,14 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/google/go-cmp/cmp",
+			"repository": "https://github.com/google/go-cmp",
+			"vcs": "git",
+			"revision": "5411ab924f9ffa6566244a9e504bc347edacffd3",
+			"branch": "master",
+			"path": "/cmp",
+			"notests": true
+		}
+	]
+}

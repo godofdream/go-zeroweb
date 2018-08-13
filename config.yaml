@@ -1,0 +1,226 @@
+http:
+  # Default bind Addr is 127.0.0.1:8080
+  Addr: "127.0.0.1:8080"
+
+  # Server name for sending in response headers.
+  #
+  # Default None
+  Name: ""
+
+  # The maximum number of concurrent connections the server may serve.
+  #
+  # DefaultConcurrency is used if not set. (1024 * 1024)
+  Concurrency: 1048576
+
+  # The server will close all the incoming connections after sending
+  # the first response to client if this option is set to true.
+  #
+  # By default keep-alive connections are enabled.
+  DisableKeepalive: true
+
+  # Per-connection buffer size for requests' reading.
+  # This also limits the maximum header size.
+  #
+  # Increase this buffer if your clients send multi-KB RequestURIs
+  # and/or multi-KB headers (for example, BIG cookies).
+  #
+  # Default buffer size is used if not set.
+  ReadBufferSize: 8192
+
+  # Per-connection buffer size for responses' writing.
+  #
+  # Default buffer size is used if not set.
+  WriteBufferSize: 8192
+
+  # Maximum duration for reading the full request (including body).
+  #
+  # This also limits the maximum duration for idle keep-alive
+  # connections.
+  #
+  # By default request read timeout is unlimited.
+  ReadTimeout: 0
+
+  # Maximum duration for writing the full response (including body).
+  #
+  # By default response write timeout is unlimited.
+  WriteTimeout: 0
+
+  # Maximum number of concurrent client connections allowed per IP.
+  #
+  # By default unlimited number of concurrent connections
+  # may be established to the server from a single IP address.
+  MaxConnsPerIP: 0
+
+  # Maximum number of requests served per connection.
+  #
+  # The server closes connection after the last request.
+  # 'Connection: close' header is added to the last response.
+  #
+  # By default unlimited number of requests may be served per connection.
+  MaxRequestsPerConn: 0
+
+  # Maximum keep-alive connection lifetime.
+  #
+  # The server closes keep-alive connection after its' lifetime
+  # expiration.
+  #
+  # See also ReadTimeout for limiting the duration of idle keep-alive
+  # connections.
+  #
+  # By default keep-alive connection lifetime is unlimited.
+  MaxKeepaliveDuration: 0
+
+  # Maximum request body size.
+  #
+  # The server rejects requests with bodies exceeding this limit.
+  #
+  # Request body size is limited by DefaultMaxRequestBodySize by default. (4 * 1024 * 1024)
+  MaxRequestBodySize: 4194304
+
+  # Aggressively reduces memory usage at the cost of higher CPU usage
+  # if set to true.
+  #
+  # Try enabling this option only if the server consumes too much memory
+  # serving mostly idle keep-alive connections. This may reduce memory
+  # usage by more than 50%.
+  #
+  # Aggressive memory usage reduction is disabled by default.
+  ReduceMemoryUsage: false
+
+  # Rejects all non-GET requests if set to true.
+  #
+  # This option is useful as anti-DoS protection for servers
+  # accepting only GET requests. The request size is limited
+  # by ReadBufferSize if GetOnly is set.
+  #
+  # Server accepts all the requests by default.
+  GetOnly: false
+
+  # Logs all errors, including the most frequent
+  # 'connection reset by peer', 'broken pipe' and 'connection timeout'
+  # errors. Such errors are common in production serving real-world
+  # clients.
+  #
+  # By default the most frequent errors such as
+  # 'connection reset by peer', 'broken pipe' and 'connection timeout'
+  # are suppressed in order to limit output log traffic.
+  LogAllErrors: false
+
+  # Header names are passed as-is without normalization
+  # if this option is set.
+  #
+  # Disabled header names' normalization may be useful only for proxying
+  # incoming requests to other servers expecting case-sensitive
+  # header names. See https:#github.com/valyala/fasthttp/issues/57
+  # for details.
+  #
+  # By default request and response header names are normalized, i.e.
+  # The first letter and the first letters following dashes
+  # are uppercased, while all the other letters are lowercased.
+  # Examples:
+  #
+  #     * HOST -> Host
+  #     * content-type -> Content-Type
+  #     * cONTENT-lenGTH -> Content-Length
+  DisableHeaderNamesNormalizing: false
+
+  # NoDefaultServerHeader, when set to true, causes the default Server header
+  # to be excluded from the Response.
+  #
+  # The default Server header value is the value of the Name field or an
+  # internal default value in its absence. With this option set to true,
+  # the only time a Server header will be sent is if a non-zero length
+  # value is explicitly provided during a request.
+  NoDefaultServerHeader: true
+
+#################################################################
+db:
+  # Whether database connection to postgres is used
+  Enabled: true
+
+  # Network type, either tcp or unix.
+  # Default is tcp.
+  Network: tcp
+
+  # TCP host:port or Unix socket depending on Network.
+  Addr: "127.0.0.1:5432"
+
+  #User:
+  #Password:
+  #Database:
+
+  # TLS config for secure connections.
+  #TLSConfig:
+    #TODO add examples and default
+
+  # Maximum number of retries before giving up.
+  # Default is to not retry failed queries.
+  MaxRetries: 0
+
+  # Whether to retry queries cancelled because of statement_timeout.
+  RetryStatementTimeout: false
+
+  # Minimum backoff between each retry.
+  # Default is 250 milliseconds; -1 disables backoff.
+  MinRetryBackoff: 250ms
+
+  # Maximum backoff between each retry.
+  # Default is 4 seconds; -1 disables backoff.
+  MaxRetryBackoff: 4s
+
+  # Dial timeout for establishing new connections.
+  # Default is 5 seconds.
+  DialTimeout: 5s
+
+  # Timeout for socket reads. If reached, commands will fail
+  # with a timeout instead of blocking.
+  ReadTimeout: 0
+  # Timeout for socket writes. If reached, commands will fail
+  # with a timeout instead of blocking.
+  WriteTimeout: 0
+
+  # Maximum number of socket connections.
+  # Default is 10 connections per every CPU as reported by runtime.NumCPU.
+  #PoolSize: int
+
+  # Time for which client waits for free connection if all
+  # connections are busy before returning an error.
+  # Default is 30 seconds if ReadTimeOut is not defined, otherwise,
+  # ReadTimeout + 1 second.
+  #PoolTimeout: time.Duration
+
+  # Time after which client closes idle connections.
+  # Default is to not close idle connections.
+  IdleTimeout: 0
+
+  # Connection age at which client retires (closes) the connection.
+  # It is useful with proxies like PgBouncer and HAProxy.
+  # Default is to not close aged connections.
+  MaxAge: 0
+
+  # Frequency of idle checks.
+  # Default is 1 minute.
+  IdleCheckFrequency: 1m
+
+
+#################################################################
+log:
+  # DebugLevel defines debug log level.
+  # InfoLevel defines info log level.
+  # WarnLevel defines warn log level.
+  # ErrorLevel defines error log level.
+  # FatalLevel defines fatal log level.
+  # PanicLevel defines panic log level.
+  # NoLevel defines an absent log level.
+  # Disabled disables the logger.
+  # Default is Infolevel
+  LogLevel: "Infolevel"
+
+  # TimestampFieldName is the field name used for the timestamp field.
+  TimestampFieldName: "time"
+
+  # LevelFieldName is the field name used for the level field.
+  LevelFieldName: "level"
+
+  # MessageFieldName is the field name used for the message field.
+  MessageFieldName: "message"
