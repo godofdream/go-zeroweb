@@ -19,7 +19,7 @@ func (zeroweb *Zeroweb) reloadHTTP() error {
 	// httpserver
 
 	var httpconfig *fasthttp.Server
-	var oldhttpconfig *fasthttp.Server = zeroweb.Server
+	oldhttpconfig := zeroweb.Server
 	err := zeroweb.Config.UnmarshalKey("http", httpconfig)
 	if err != nil {
 		zeroweb.Log.Error().Err(err).Msg("unable to decode http config into struct")
